@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new LoversLock\UtilisateurBundle\LoversLockUtilisateurBundle(),
             new LoversLock\PontBundle\LoversLockPontBundle(),
             new LoversLock\CadenasBundle\LoversLockCadenasBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

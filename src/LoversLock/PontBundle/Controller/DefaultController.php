@@ -60,7 +60,10 @@ class DefaultController extends Controller
                 echo " with message: " . $e->getMessage();
             }
         }
-        print_r($user_profile);
-        return array('fbUser' => $user_profile);
+        if(isset($user_profile)) {
+            print_r($user_profile);
+            return array('fbUser' => $user_profile);
+        }
+        else return array();
     }
 }
