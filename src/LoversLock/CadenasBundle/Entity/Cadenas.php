@@ -3,13 +3,12 @@
 namespace LoversLock\CadenasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use LoversLock\UtilisateurBundle\Entity\Utilisateur;
 
 /**
  * Cadenas
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="LoversLock\CadenasBundle\Service\CadenasService")
+ * @ORM\Entity()
  */
 class Cadenas
 {
@@ -74,14 +73,15 @@ class Cadenas
      * @ORM\JoinColumn(name="type_cadenas_id", referencedColumnName="id")
      */
     private $typeCadenas;
-
     /**
-     * @var string
-     *
-     * @ORM\Column(name="URLImage", type="string", length=255)
+     * Constructor
      */
-    private $URLImage;
-
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime('now');
+        $this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -94,35 +94,26 @@ class Cadenas
     }
 
     /**
-     * @return mixed
-     */
-    public function getUtilisateurs()
-    {
-        return $this->utilisateurs;
-    }
-
-    /**
-     * @param mixed $utilisateurs
-     */
-    public function setUtilisateurs($utilisateurs)
-    {
-        $this->utilisateurs = $utilisateurs;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLibelle()
-    {
-        return $this->libelle;
-    }
-
-    /**
+     * Set libelle
+     *
      * @param string $libelle
+     * @return Cadenas
      */
     public function setLibelle($libelle)
     {
         $this->libelle = $libelle;
+    
+        return $this;
+    }
+
+    /**
+     * Get libelle
+     *
+     * @return string 
+     */
+    public function getLibelle()
+    {
+        return $this->libelle;
     }
 
     /**
@@ -134,7 +125,7 @@ class Cadenas
     public function setEtat($etat)
     {
         $this->etat = $etat;
-
+    
         return $this;
     }
 
@@ -157,7 +148,7 @@ class Cadenas
     public function setStatut($statut)
     {
         $this->statut = $statut;
-
+    
         return $this;
     }
 
@@ -180,7 +171,7 @@ class Cadenas
     public function setDateCreation($dateCreation)
     {
         $this->dateCreation = $dateCreation;
-
+    
         return $this;
     }
 
@@ -203,7 +194,7 @@ class Cadenas
     public function setDateRencontre($dateRencontre)
     {
         $this->dateRencontre = $dateRencontre;
-
+    
         return $this;
     }
 
@@ -218,7 +209,65 @@ class Cadenas
     }
 
     /**
-     * @return mixed
+     * Add utilisateurs
+     *
+     * @param \LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateurs
+     * @return Cadenas
+     */
+    public function addUtilisateur(\LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateurs)
+    {
+        $this->utilisateurs[] = $utilisateurs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove utilisateurs
+     *
+     * @param \LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateurs
+     */
+    public function removeUtilisateur(\LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateurs)
+    {
+        $this->utilisateurs->removeElement($utilisateurs);
+    }
+
+    /**
+     * Get utilisateurs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUtilisateurs()
+    {
+        return $this->utilisateurs;
+    }
+
+    /**
+     * Add commentaires
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Commentaire $commentaires
+     * @return Cadenas
+     */
+    public function addCommentaire(\LoversLock\CadenasBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires[] = $commentaires;
+    
+        return $this;
+    }
+
+    /**
+     * Remove commentaires
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Commentaire $commentaires
+     */
+    public function removeCommentaire(\LoversLock\CadenasBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires->removeElement($commentaires);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getCommentaires()
     {
@@ -226,49 +275,25 @@ class Cadenas
     }
 
     /**
-     * @param mixed $commentaires
-     */
-    public function setCommentaires($commentaires)
-    {
-        $this->commentaires = $commentaires;
-    }
-
-    /**
-     * @return object
-     */
-    public function getTypeCadenas()
-    {
-        return $this->typeCadenas;
-    }
-
-    /**
-     * @param object $typeCadenas
-     */
-    public function setTypeCadenas($typeCadenas)
-    {
-        $this->typeCadenas = $typeCadenas;
-    }
-
-    /**
-     * Set URLImage
+     * Set typeCadenas
      *
-     * @param string $URLImage
+     * @param \LoversLock\CadenasBundle\Entity\TypeCadenas $typeCadenas
      * @return Cadenas
      */
-    public function setURLImage($URLImage)
+    public function setTypeCadenas(\LoversLock\CadenasBundle\Entity\TypeCadenas $typeCadenas = null)
     {
-        $this->URLImage = $URLImage;
-
+        $this->typeCadenas = $typeCadenas;
+    
         return $this;
     }
 
     /**
-     * Get URLImage
+     * Get typeCadenas
      *
-     * @return string
+     * @return \LoversLock\CadenasBundle\Entity\TypeCadenas 
      */
-    public function getURLImage()
+    public function getTypeCadenas()
     {
-        return $this->URLImage;
+        return $this->typeCadenas;
     }
 }

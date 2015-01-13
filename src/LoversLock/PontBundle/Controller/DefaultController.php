@@ -2,6 +2,7 @@
 
 namespace LoversLock\PontBundle\Controller;
 
+use LoversLock\CadenasBundle\Entity\TypeCadenas;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -18,6 +19,9 @@ use Facebook\GraphObject;
 use Facebook\GraphUser;
 use Facebook\FacebookJavaScriptLoginHelper;
 
+use LoversLock\UtilisateurBundle\Entity\Utilisateur;
+use LoversLock\CadenasBundle\Entity\Cadenas;
+
 class DefaultController extends Controller
 {
     /**
@@ -26,12 +30,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $utilisateur = $this->get("utilisateur.service")->creerUtilisateur("123", "facebook");
-        echo $utilisateur->getNomSite();
-
-        $cadenas = $this->get("cadenas.service");
-
-        FacebookSession::setDefaultApplication('414349855386025', '5162b4158b51a93f160c9ab408b8bb4d');
+       /*FacebookSession::setDefaultApplication('414349855386025', '5162b4158b51a93f160c9ab408b8bb4d');
 
         $helper = new FacebookJavaScriptLoginHelper();
         try {
@@ -52,7 +51,7 @@ class DefaultController extends Controller
                 echo $user_profile->getLastname();
                 echo $user_profile->getEmail();
                 echo $user_profile->getId();
-                echo $user_profile->getGender();*/
+                echo $user_profile->getGender();
 
             } catch (FacebookRequestException $e) {
 
@@ -64,6 +63,53 @@ class DefaultController extends Controller
             print_r($user_profile);
             return array('fbUser' => $user_profile);
         }
-        else return array();
+        else return array();*/
+
+        /*$typeCadenas = new TypeCadenas();
+        $typeCadenas->setAccessibilite("public");
+        $typeCadenas->setNom("cadenas 1");
+        $typeCadenas->setPrix(0);
+        $typeCadenas->setURLImage("fj");
+
+        $utilisateur = new Utilisateur();
+        $utilisateur->setIdSite("123");
+        $utilisateur->setNomSite("facebook");
+        $utilisateur->addTypeCadena($typeCadenas);
+
+        $utilisateur2 = new Utilisateur();
+        $utilisateur2->setIdSite("456");
+        $utilisateur2->setNomSite("facebook");
+        $utilisateur2->addTypeCadena($typeCadenas);
+
+        $cadenas = new Cadenas();
+        $cadenas->setTypeCadenas($typeCadenas);
+        $cadenas->addUtilisateur($utilisateur);
+        $cadenas->addUtilisateur($utilisateur2);
+        $cadenas->setDateRencontre(new \DateTime('NOW'));
+        $cadenas->setEtat("public");
+        $cadenas->setStatut("blabla");
+        $cadenas->setLibelle("libelle");
+        $cadenas->setStatut("en couple");
+
+        $utilisateur->addCadena($cadenas);
+        $utilisateur2->addCadena($cadenas);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($typeCadenas);
+        $em->persist($utilisateur);
+        $em->persist($utilisateur2);
+        $em->persist($cadenas);
+        $em->flush();*/
+
+        $product = $this->getDoctrine()
+            ->getRepository('LoversLockUtilisateurBundle:Utilisateur')
+            ->find(5);
+
+        $c = $product->getCadenas();
+        echo $c->get(0)->getLibelle();
+        //$utilisateur = $this->get("utilisateur.service")->getById(5);
+        //echo $utilisateur->getNomSite();
+
+        return array();
     }
 }

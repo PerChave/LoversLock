@@ -51,6 +51,10 @@ class Commentaire
      */
     private $message;
 
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -63,52 +67,6 @@ class Commentaire
     }
 
     /**
-     * Set cadenas
-     *
-     * @param object $cadenas
-     * @return Commentaire
-     */
-    public function setCadenas($cadenas)
-    {
-        $this->cadenas = $cadenas;
-
-        return $this;
-    }
-
-    /**
-     * Get cadenas
-     *
-     * @return object
-     */
-    public function getCadenas()
-    {
-        return $this->cadenas;
-    }
-
-    /**
-     * Set utilisateur
-     *
-     * @param object $utilisateur
-     * @return Commentaire
-     */
-    public function setUtilisateur($utilisateur)
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get utilisateur
-     *
-     * @return object
-     */
-    public function getUtilisateur()
-    {
-        return $this->utilisateur;
-    }
-
-    /**
      * Set dateCreation
      *
      * @param \DateTime $dateCreation
@@ -117,7 +75,7 @@ class Commentaire
     public function setDateCreation($dateCreation)
     {
         $this->dateCreation = $dateCreation;
-
+    
         return $this;
     }
 
@@ -140,7 +98,7 @@ class Commentaire
     public function setMessage($message)
     {
         $this->message = $message;
-
+    
         return $this;
     }
 
@@ -152,5 +110,51 @@ class Commentaire
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Set cadenas
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Cadenas $cadenas
+     * @return Commentaire
+     */
+    public function setCadenas(\LoversLock\CadenasBundle\Entity\Cadenas $cadenas = null)
+    {
+        $this->cadenas = $cadenas;
+    
+        return $this;
+    }
+
+    /**
+     * Get cadenas
+     *
+     * @return \LoversLock\CadenasBundle\Entity\Cadenas 
+     */
+    public function getCadenas()
+    {
+        return $this->cadenas;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateur
+     * @return Commentaire
+     */
+    public function setUtilisateur(\LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+    
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \LoversLock\UtilisateurBundle\Entity\Utilisateur 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
     }
 }

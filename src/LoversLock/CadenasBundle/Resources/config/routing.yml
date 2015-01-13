@@ -1,0 +1,3 @@
+cadenas:
+    path:   /
+    defaults:  { _controller: LoversLockCadenasBundle:Cadenas:index }

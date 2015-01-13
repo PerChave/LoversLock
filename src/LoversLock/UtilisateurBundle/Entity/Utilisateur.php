@@ -3,13 +3,12 @@
 namespace LoversLock\UtilisateurBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use LoversLock\CadenasBundle\Entity\Cadenas;
 
 /**
  * Utilisateur
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="LoversLock\UtilisateurBundle\Service\UtilisateurService")
+ * @ORM\Entity()
  */
 class Utilisateur
 {
@@ -65,12 +64,20 @@ class Utilisateur
      * @ORM\Column(name="dateInscription", type="date")
      */
     private $dateInscription;
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cadenas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->typeCadenas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -86,14 +93,14 @@ class Utilisateur
     public function setIdSite($idSite)
     {
         $this->idSite = $idSite;
-
+    
         return $this;
     }
 
     /**
      * Get idSite
      *
-     * @return string
+     * @return string 
      */
     public function getIdSite()
     {
@@ -101,7 +108,22 @@ class Utilisateur
     }
 
     /**
-     * @return string
+     * Set nomSite
+     *
+     * @param string $nomSite
+     * @return Utilisateur
+     */
+    public function setNomSite($nomSite)
+    {
+        $this->nomSite = $nomSite;
+    
+        return $this;
+    }
+
+    /**
+     * Get nomSite
+     *
+     * @return string 
      */
     public function getNomSite()
     {
@@ -109,63 +131,22 @@ class Utilisateur
     }
 
     /**
-     * @param string $nomSite
+     * Set dateInscription
+     *
+     * @param \DateTime $dateInscription
+     * @return Utilisateur
      */
-    public function setNomSite($nomSite)
+    public function setDateInscription($dateInscription)
     {
-        $this->nomSite = $nomSite;
+        $this->dateInscription = $dateInscription;
+    
+        return $this;
     }
 
     /**
-     * @return mixed
-     */
-    public function getCadenas()
-    {
-        return $this->cadenas;
-    }
-
-    /**
-     * @param mixed $cadenas
-     */
-    public function setCadenas($cadenas)
-    {
-        $this->cadenas = $cadenas;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTypeCadenas()
-    {
-        return $this->typeCadenas;
-    }
-
-    /**
-     * @param mixed $typeCadenas
-     */
-    public function setTypeCadenas($typeCadenas)
-    {
-        $this->typeCadenas = $typeCadenas;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCommentaires()
-    {
-        return $this->commentaires;
-    }
-
-    /**
-     * @param mixed $commentaires
-     */
-    public function setCommentaires($commentaires)
-    {
-        $this->commentaires = $commentaires;
-    }
-
-    /**
-     * @return mixed
+     * Get dateInscription
+     *
+     * @return \DateTime 
      */
     public function getDateInscription()
     {
@@ -173,15 +154,101 @@ class Utilisateur
     }
 
     /**
-     * @param mixed $dateInscription
+     * Add cadenas
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Cadenas $cadenas
+     * @return Utilisateur
      */
-    public function setDateInscription($dateInscription)
+    public function addCadena(\LoversLock\CadenasBundle\Entity\Cadenas $cadenas)
     {
-        $this->dateInscription = $dateInscription;
+        $this->cadenas[] = $cadenas;
+    
+        return $this;
     }
 
-    public function __construct()
+    /**
+     * Remove cadenas
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Cadenas $cadenas
+     */
+    public function removeCadena(\LoversLock\CadenasBundle\Entity\Cadenas $cadenas)
     {
-        $this->dateInscription = new \DateTime('NOW');
+        $this->cadenas->removeElement($cadenas);
+    }
+
+    /**
+     * Get cadenas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCadenas()
+    {
+        return $this->cadenas;
+    }
+
+    /**
+     * Add typeCadenas
+     *
+     * @param \LoversLock\CadenasBundle\Entity\TypeCadenas $typeCadenas
+     * @return Utilisateur
+     */
+    public function addTypeCadena(\LoversLock\CadenasBundle\Entity\TypeCadenas $typeCadenas)
+    {
+        $this->typeCadenas[] = $typeCadenas;
+    
+        return $this;
+    }
+
+    /**
+     * Remove typeCadenas
+     *
+     * @param \LoversLock\CadenasBundle\Entity\TypeCadenas $typeCadenas
+     */
+    public function removeTypeCadena(\LoversLock\CadenasBundle\Entity\TypeCadenas $typeCadenas)
+    {
+        $this->typeCadenas->removeElement($typeCadenas);
+    }
+
+    /**
+     * Get typeCadenas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTypeCadenas()
+    {
+        return $this->typeCadenas;
+    }
+
+    /**
+     * Add commentaires
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Commentaire $commentaires
+     * @return Utilisateur
+     */
+    public function addCommentaire(\LoversLock\CadenasBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires[] = $commentaires;
+    
+        return $this;
+    }
+
+    /**
+     * Remove commentaires
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Commentaire $commentaires
+     */
+    public function removeCommentaire(\LoversLock\CadenasBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires->removeElement($commentaires);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }

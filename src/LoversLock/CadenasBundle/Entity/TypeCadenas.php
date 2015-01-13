@@ -58,7 +58,14 @@ class TypeCadenas
      * @ORM\Column(name="URLImage", type="string", length=255)
      */
     private $uRLImage;
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cadenas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -79,7 +86,7 @@ class TypeCadenas
     public function setNom($nom)
     {
         $this->nom = $nom;
-
+    
         return $this;
     }
 
@@ -102,7 +109,7 @@ class TypeCadenas
     public function setAccessibilite($accessibilite)
     {
         $this->accessibilite = $accessibilite;
-
+    
         return $this;
     }
 
@@ -125,7 +132,7 @@ class TypeCadenas
     public function setPrix($prix)
     {
         $this->prix = $prix;
-
+    
         return $this;
     }
 
@@ -140,22 +147,6 @@ class TypeCadenas
     }
 
     /**
-     * @return mixed
-     */
-    public function getCadenas()
-    {
-        return $this->cadenas;
-    }
-
-    /**
-     * @param mixed $cadenas
-     */
-    public function setCadenas($cadenas)
-    {
-        $this->cadenas = $cadenas;
-    }
-
-    /**
      * Set uRLImage
      *
      * @param string $uRLImage
@@ -164,7 +155,7 @@ class TypeCadenas
     public function setURLImage($uRLImage)
     {
         $this->uRLImage = $uRLImage;
-
+    
         return $this;
     }
 
@@ -176,5 +167,71 @@ class TypeCadenas
     public function getURLImage()
     {
         return $this->uRLImage;
+    }
+
+    /**
+     * Add cadenas
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Cadenas $cadenas
+     * @return TypeCadenas
+     */
+    public function addCadena(\LoversLock\CadenasBundle\Entity\Cadenas $cadenas)
+    {
+        $this->cadenas[] = $cadenas;
+    
+        return $this;
+    }
+
+    /**
+     * Remove cadenas
+     *
+     * @param \LoversLock\CadenasBundle\Entity\Cadenas $cadenas
+     */
+    public function removeCadena(\LoversLock\CadenasBundle\Entity\Cadenas $cadenas)
+    {
+        $this->cadenas->removeElement($cadenas);
+    }
+
+    /**
+     * Get cadenas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCadenas()
+    {
+        return $this->cadenas;
+    }
+
+    /**
+     * Add utilisateur
+     *
+     * @param \LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateur
+     * @return TypeCadenas
+     */
+    public function addUtilisateur(\LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateurs[] = $utilisateur;
+    
+        return $this;
+    }
+
+    /**
+     * Remove utilisateur
+     *
+     * @param \LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateur
+     */
+    public function removeUtilisateur(\LoversLock\UtilisateurBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateurs->removeElement($utilisateur);
+    }
+
+    /**
+     * Get utilisateurs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUtilisateurs()
+    {
+        return $this->utilisateurs;
     }
 }

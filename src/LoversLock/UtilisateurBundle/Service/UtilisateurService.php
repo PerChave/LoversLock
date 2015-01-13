@@ -7,6 +7,10 @@ use LoversLock\UtilisateurBundle\Entity\Utilisateur;
 
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * Class UtilisateurService
+ * @package LoversLock\UtilisateurBundle\Service
+ */
 class UtilisateurService extends EntityRepository
 {
 
@@ -42,5 +46,12 @@ class UtilisateurService extends EntityRepository
     public function supprimerUtilisateur(Utilisateur $util) {
         $this->getEntityManager()->remove($util);
         $this->getEntityManager()->flush();
+    }
+
+    public function getById($id) {
+        $repository = $this->getEntityManager()->getRepository('LoversLockUtilisateurBundle:Utilisateur');
+        $util = $repository->findOneBy(array('id' => $id));
+        $this->getEntityManager()->flush();
+        return $util;
     }
 }
