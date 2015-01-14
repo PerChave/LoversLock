@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use LoversLock\UtilisateurBundle\Service\UtilisateurService;
 
+use \HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
+
 use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;
 use Facebook\FacebookRequest;
@@ -64,8 +66,8 @@ class DefaultController extends Controller
             return array('fbUser' => $user_profile);
         }
         else return array();*/
-
-        /*$typeCadenas = new TypeCadenas();
+/*
+        $typeCadenas = new TypeCadenas();
         $typeCadenas->setAccessibilite("public");
         $typeCadenas->setNom("cadenas 1");
         $typeCadenas->setPrix(0);
@@ -74,11 +76,14 @@ class DefaultController extends Controller
         $utilisateur = new Utilisateur();
         $utilisateur->setIdSite("123");
         $utilisateur->setNomSite("facebook");
+        $utilisateur->setDateInscription(new \DateTime('NOW'));
         $utilisateur->addTypeCadena($typeCadenas);
+
 
         $utilisateur2 = new Utilisateur();
         $utilisateur2->setIdSite("456");
         $utilisateur2->setNomSite("facebook");
+        $utilisateur2->setDateInscription(new \DateTime('NOW'));
         $utilisateur2->addTypeCadena($typeCadenas);
 
         $cadenas = new Cadenas();
@@ -103,13 +108,15 @@ class DefaultController extends Controller
 
         $product = $this->getDoctrine()
             ->getRepository('LoversLockUtilisateurBundle:Utilisateur')
-            ->find(5);
+            ->find(1);
 
         $c = $product->getCadenas();
-        echo $c->get(0)->getLibelle();
+       // echo $c->get(1)->getLibelle();
         //$utilisateur = $this->get("utilisateur.service")->getById(5);
         //echo $utilisateur->getNomSite();
 
         return array();
     }
+
+
 }

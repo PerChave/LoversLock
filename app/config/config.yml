@@ -73,13 +73,19 @@ swiftmailer:
     spool:     { type: memory }
 
 hwi_oauth:
+    http_client:
+        verify_peer: false
     firewall_name: main
     resource_owners:
         facebook:
             type:                facebook
             client_id:           414349855386025
             client_secret:       5162b4158b51a93f160c9ab408b8bb4d
-            infos_url:     "https://graph.facebook.com/me?fields=username,name,email,picture.type(large)"
+            infos_url:     "https://graph.facebook.com/me?fields=id,name,email"
+            scope: "email"
+            paths:
+                id : id
+                email: email
             options:
                 display: popup #dialog is optimized for popup window
 

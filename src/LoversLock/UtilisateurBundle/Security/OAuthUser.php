@@ -12,16 +12,16 @@ class OAuthUser extends BaseOAuthUser{
     public function __construct(UserResponseInterface $response) {
         parent::__construct($response->getUsername());
         $this->data = array(
-            'provider'=>$response->getResourceOwner()->getName(),
-            'providerId'=>$response->getUsername()
+            'nomSite'=>'fb',
+            'idSite'=>$response->getAccessToken()
         );
         $vars = array(
-            'nickname',
-            'realname',
+            'id',
+            'firstname',
+            'lastname',
             'email',
             'profilePicture',
             'accessToken',
-            'refreshToken',
             'tokenSecret',
             'expiresIn',
         );
