@@ -81,11 +81,10 @@ hwi_oauth:
             type:                facebook
             client_id:           414349855386025
             client_secret:       5162b4158b51a93f160c9ab408b8bb4d
-            infos_url:     "https://graph.facebook.com/me?fields=id,name,email"
+            infos_url:     "https://graph.facebook.com/me?fields=id,name,email,picture.type(square)"
             scope: "email"
             paths:
-                id : id
-                email: email
+                user_id: identifier
             options:
                 display: popup #dialog is optimized for popup window
 

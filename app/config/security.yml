@@ -26,6 +26,7 @@ security:
         main:
             pattern: ^/
             anonymous: ~
+            logout: true
             #provider: oauth
             oauth:
                 resource_owners:
@@ -33,6 +34,7 @@ security:
                 login_path:        /login
                 use_forward:       false
                 failure_path:      /login
+                default_target_path: /
                 #oauth_user_provider:
                 #    service: my_oauth_members
                 oauth_user_provider:
