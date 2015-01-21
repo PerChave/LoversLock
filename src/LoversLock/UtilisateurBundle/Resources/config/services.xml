@@ -10,7 +10,8 @@
 
     <services>
         <service id="ib_user.oauth_user_provider" class="%ib_user.oauth_user_provider.class%">
-            <argument>session</argument>
+            <argument type="service" id="session" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
     </services>
 </container>

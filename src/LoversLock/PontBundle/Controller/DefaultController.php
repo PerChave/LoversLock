@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use LoversLock\UtilisateurBundle\Service\UtilisateurService;
-
+use \HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface as response;
 use \HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 
 use Facebook\FacebookSession;
@@ -106,6 +106,10 @@ class DefaultController extends Controller
         $em->persist($cadenas);
         $em->flush();*/
 
+
+        //$data = $response->getResponse(); /* this method will return all data that was sent from resource owner */
+
+
         $product = $this->getDoctrine()
             ->getRepository('LoversLockUtilisateurBundle:Utilisateur')
             ->find(1);
@@ -117,6 +121,8 @@ class DefaultController extends Controller
 
         return array();
     }
+
+
 
 
 }

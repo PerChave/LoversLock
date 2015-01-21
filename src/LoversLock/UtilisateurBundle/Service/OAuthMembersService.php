@@ -4,82 +4,58 @@ namespace LoversLock\UtilisateurBundle\Service;
 
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider as BaseOAuthUserProvider;
 
+use Doctrine\ORM\EntityManager;
 use \HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
+use LoversLock\CadenasBundle\Entity\TypeCadenas;
+use LoversLock\UtilisateurBundle\Entity\Utilisateur;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class OAuthMembersService extends BaseOAuthUserProvider{
-    protected $session;
-    public function __construct($session) {
-        $this->session = $session;
+    private $em;
+    private $session;
 
+    public function __construct($session, EntityManager $em) {
+        $this->session = $session;
+        $this->em = $em;
+
+    }
+
+    public function loadUserBySiteId($id){
+
+        $util = $this->em->getRepository('LoversLockUtilisateurBundle:Utilisateur')->findOneBy(array('idSite' => $id));
+        return $util;
+    }
+
+    public function getDefaultTypeCadenas(){
+        $tc = $this->em->getRepository('LoversLockCadenasBundle:TypeCadenas')->findOneBy(array('id' => 1));
+        return $tc;
     }
 
 
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
+        $site_id=$response->getUsername();
+        $site_nom=$response->getResourceOwner()->getName();
+        $result=$this->loadUserBySiteId($response->getUsername());
+        //on verifie si l'utilisateur n'existe deja dans la bd, sinon on le cree
+        if(!count($result)){
 
-        //data from facebook response
-        $facebook_id = $response->getUsername();
-        $nickname = $response->getNickname();
-        $realname = $response->getRealName();
-        $email = $response->getEmail();
-        $avatar = $response->getProfilePicture();
+            $default_type_cadenas = $this->getDefaultTypeCadenas();
 
-        //set data in session
-        $this->session->set('nickname', $nickname);
-        $this->session->set('realname', $realname);
-        $this->session->set('email', $email);
-        $this->session->set('avatar', $avatar);
-
-        //get user by fid
-        /*$qb = $this->doctrine->getManager()->createQueryBuilder();
-        $qb ->select('u.id')
-            ->from('AcmeDemoBundle:User', 'u')
-            ->where('u.fid = :fid')
-            ->setParameter('fid', $facebook_id)
-            ->setMaxResults(1);
-        $result = $qb->getQuery()->getResult();
-
-        //add to database if doesn't exists
-        if ( !count($result) ) {
-            $User = new User();
-            $User->setCreatedAt(new \DateTime());
-            $User->setNickname($nickname);
-            $User->setRealname($realname);
-            $User->setEmail($email);
-            $User->setAvatar($avatar);
-            $User->setFID($facebook_id);
-
-            $em = $this->doctrine->getManager();
-            $em->persist($User);
-            $id = $em->flush();
-        } else {
-            $id = $result[0]['id'];
+            $utilisateur = new Utilisateur();
+            $utilisateur->setIdSite($site_id);
+            $utilisateur->setNomSite($site_nom);
+            $utilisateur->setDateInscription(new \DateTime('NOW'));
+            $utilisateur->addTypeCadena($default_type_cadenas);
+            $this->em->persist($utilisateur);
+            $this->em->flush();
         }
+        $user = $this->loadUserByUsername(sprintf('%s-%s',$response->getResourceOwner()->getName(),
+                                                        $response->getUsername()));
 
-        //set id
-        $this->session->set('id', $id);
 
-        //@TODO: hmm : is admin
-        if ($this->isUserAdmin($nickname)) {
-            $this->session->set('is_admin', true);
-        }
+        return $user;
 
-        //parent:: returned value
-        return $this->loadUserByUsername($response->getNickname());
-    }
-
-    public function supportsClass($class)
-    {
-        return $class === 'Acme\\DemoBundle\\Provider\\OAuthUser';
-    }*/
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSession()
-    {
-        return $this->session;
     }
 
 }

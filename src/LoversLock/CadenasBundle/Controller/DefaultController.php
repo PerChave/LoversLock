@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/login/check-facebook")
+     * @Route("/login")
      * @Template()
      */
     public function indexAction()
